@@ -10,4 +10,4 @@ class ButtonCommand(QDialog):
     def render(self):
         for index, command in enumerate(self.command):
             share, rest = divmod(index, 3)
-            self.layout.addWidget(QPushButton(command), share, rest)
+            self.layout.addWidget(QPushButton(command), share + 1, rest)

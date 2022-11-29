@@ -9,7 +9,7 @@ class ButtonOperator(QDialog):
 
     def render(self):
         for index, operator in enumerate(self.operators):
-            self.layout.addWidget(QPushButton(operator), index, 4)
+            self.layout.addWidget(QPushButton(operator), index + 1, 4)
             
         
 
