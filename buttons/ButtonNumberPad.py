@@ -13,16 +13,16 @@ class ButtonNumberPad(QDialog):
 
     def numPadOverZero(self, number, button):
         share, rest = divmod(number - 1, 3)
-        self.layout.addWidget(button, share, rest)
+        self.layout.addWidget(button, share + 2, rest)
 
     def numPadZero(self, button):
-        self.layout.addWidget(button, 3, 1)
+        self.layout.addWidget(button, 5, 1)
     
     def numPadDot(self):
-        self.layout.addWidget(QPushButton('.'), 3, 2)
+        self.layout.addWidget(QPushButton('.'), 5, 2)
     
     def numPadDoubleZero(self):
-        self.layout.addWidget(QPushButton('00'), 3, 0)
+        self.layout.addWidget(QPushButton('00'), 5, 0)
 
     def render(self):
         self.template()
