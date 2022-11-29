@@ -2,6 +2,9 @@ import sys
 from PyQt5.QtWidgets import *
 
 from buttons.ButtonInput import ButtonInput
+from buttons.ButtonOperator import ButtonOperator
+from buttons.ButtonNumberPad import ButtonNumberPad
+from buttons.ButtonCommand import ButtonCommand
  
 
 class Main(QDialog):
@@ -9,21 +12,32 @@ class Main(QDialog):
         super().__init__()
 
         self.state = { "cal_num" : "0" }
+        self.layout = QGridLayout()    
+        
         self.init_ui()
 
     def init_ui(self):
         self.makeComponent([
-            ButtonInput({
-                'getState': self.getState,
-                'setState': self.setState
+            ButtonNumberPad({
+                'layout': self.layout
+            }),    
+
+            ButtonOperator({
+                'layout': self.layout
             }),
+
+            ButtonCommand({
+               'layout': self.layout 
+            })
+
         ])
-            
+
+        self.setLayout(self.layout)
         self.show()
 
     def makeComponent(self, componentInstanceArr): 
         for instance in componentInstanceArr:
-            self.setLayout(instance.render())
+            instance.render()
     
     def getState(self):
         return self.state['cal_num']; 
