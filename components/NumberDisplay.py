@@ -12,7 +12,7 @@ class NumberDisplay(QDialog):
 
     def render(self):
         self.template()
-        self.display.setText(self.getState('displayNum'))
+        self.display.setText(str(self.getState('displayNum')))
 
         self.layout.addWidget(self.display, 0, 4)
 
