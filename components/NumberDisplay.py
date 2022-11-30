@@ -6,10 +6,9 @@ class NumberDisplay(QDialog):
         
         self.layout = props['layout']
         self.getState = props['getState']
-        self.setState = props['setState']
 
     def render(self):
-        self.layout.addWidget(QLabel(self.getState()), 0, 4)
+        self.layout.addWidget(QLabel(self.getState('displayNum')), 0, 4)
 
        
 

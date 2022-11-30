@@ -11,7 +11,7 @@ class Main(QDialog):
     def __init__(self):
         super().__init__()
 
-        self.state = { "cal_num" : "" }
+        self.state = { "displayNum" : "", "operation": [] }
         
         self.layout = QGridLayout()    
         
@@ -21,7 +21,6 @@ class Main(QDialog):
         self.display = NumberDisplay({
             'layout': self.layout,
             'getState': self.getState,
-            'setState': self.setState
         })
 
         self.numberPad = ButtonNumberPad({ 
@@ -46,19 +45,25 @@ class Main(QDialog):
         for instance in componentInstanceArr:
             instance.render()
     
-    def getState(self):
-        return self.state['cal_num']; 
+    def getState(self, stateKey):
+        return self.state.get(stateKey); 
 
-    def setState(self, newData):
-        self.state["cal_num"] = newData
+    def setState(self, newData, stateKey):
+        self.state[stateKey] = newData
     
     def rerender(self):
         self.display.render()
 
     def clickNumPad(self, number): 
-        newData = self.getState() + str(number)
+        newData = self.getState('displayNum') + str(number)
 
-        self.setState(newData)
+        self.setState(newData, 'displayNum')
+        self.rerender()
+    
+    def clickBackSpace(self):
+        newData = self.getState('displayNum')[:-1]
+        
+        self.setState(newData, 'displayNum')
         self.rerender()
         
 
