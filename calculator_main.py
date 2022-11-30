@@ -6,7 +6,7 @@ from buttons.ButtonOperator import ButtonOperator
 from buttons.ButtonNumberPad import ButtonNumberPad
 from buttons.ButtonCommand import ButtonCommand
 
-from utils.fourArithmetic import plus, minus, multiply, divide
+from utils.fourArithmetic import plus, minus, multiply, divide, getRest
  
 
 class Main(QDialog):
@@ -35,7 +35,10 @@ class Main(QDialog):
             'clickOperator': self.clickOperator 
         })
            
-        self.command = ButtonCommand({ 'layout': self.layout })   
+        self.command = ButtonCommand({ 
+            'layout': self.layout,
+            'clickOneOperator': self.clickOneOperator 
+        })   
 
         self.mounted([
            self.display, 
@@ -86,12 +89,11 @@ class Main(QDialog):
             old_operator = self.getState('operator')
             
             if (len(old_operator) > 0): 
-                result = plus(operation, old_operator) or minus(operation, old_operator) or multiply(operation, old_operator) or divide(operation, old_operator) 
+                result = plus(operation, old_operator) or minus(operation, old_operator) or multiply(operation, old_operator) or divide(operation, old_operator) or getRest(operation, old_operator)
                 self.setState('operation', [result])                
                 self.setState('displayNum', str(result))
 
         self.rerender()
-
 
     def clickOperator(self, operator):
         if operator == "BackSpace": self.clickBackSpace()
@@ -99,7 +101,31 @@ class Main(QDialog):
         else:
             self.clickEqual()
             self.setState('operator', operator)
+    
+    def clickReset(self):
+        self.setState('displayNum', "")
+        self.setState('operation', [])
+        self.setState('operator', "")
+        self.rerender()
 
+    def clickReciprocal(self):
+        self.setState('displayNum', round(1 / int(self.getState('displayNum')), 10))
+        self.rerender()
+
+    def clickSquare(self):
+        self.setState('displayNum', pow(self.getState('displayNum'), 2))
+        self.rerender()
+            
+    def clickSquareRoot(self):
+        self.setState('displayNum', pow(self.getState('displayNum'), 1/2))
+        self.rerender()
+    
+    def clickOneOperator(self, operator):
+        if operator == 'C' or operator == 'CE': self.clickReset()
+        if operator == '%': self.clickOperator(operator)
+        if operator == '1/x': self.clickReciprocal()
+        if operator == 'x²': self.clickSquare()
+        if operator == '√': self.clickSquareRoot()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
