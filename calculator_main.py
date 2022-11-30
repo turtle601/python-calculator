@@ -11,37 +11,40 @@ class Main(QDialog):
     def __init__(self):
         super().__init__()
 
-        self.state = { "cal_num" : "0" }
+        self.state = { "cal_num" : "" }
         
         self.layout = QGridLayout()    
         
         self.init_ui()
 
     def init_ui(self):
-        self.makeComponent([
-            NumberDisplay({
-                'layout': self.layout,
-                'getState': self.getState,
-                'setState': self.setState
-            }),
+        self.display = NumberDisplay({
+            'layout': self.layout,
+            'getState': self.getState,
+            'setState': self.setState
+        })
 
-            ButtonNumberPad({
-                'layout': self.layout
-            }),    
+        self.numberPad = ButtonNumberPad({ 
+            'layout': self.layout,
+            'getState': self.getState,
+            'setState': self.setState,
+            'rerender': self.rerender 
+        })   
 
-            ButtonOperator({
-                'layout': self.layout
-            }),
+        self.operator = ButtonOperator({ 'layout': self.layout })   
+        self.command = ButtonCommand({ 'layout': self.layout })   
 
-            ButtonCommand({
-               'layout': self.layout 
-            })
+        self.mounted([
+           self.display, 
+           self.numberPad, 
+           self.operator, 
+           self.command
         ])
 
         self.setLayout(self.layout)
         self.show()
 
-    def makeComponent(self, componentInstanceArr): 
+    def mounted(self, componentInstanceArr): 
         for instance in componentInstanceArr:
             instance.render()
     
@@ -50,6 +53,9 @@ class Main(QDialog):
 
     def setState(self, newData):
         self.state["cal_num"] = newData
+    
+    def rerender(self):
+        self.display.render()
         
 
 if __name__ == '__main__':
