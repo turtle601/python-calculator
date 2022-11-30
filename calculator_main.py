@@ -64,15 +64,15 @@ class Main(QDialog):
         self.display.render()
 
     def clickNumPad(self, number): 
-        newData = self.getState('displayNum') + str(number)
+        newData = str(self.getState('displayNum')) + str(number)
 
-        self.setState('displayNum', newData)
+        self.setState('displayNum', int(newData))
         self.rerender()
     
     def clickBackSpace(self):
-        newData = self.getState('displayNum')[:-1]
+        newData = str(self.getState('displayNum'))[:-1]
         
-        self.setState('displayNum', newData)
+        self.setState('displayNum', int(newData))
         self.rerender()
 
     def clickEqual(self):
@@ -91,7 +91,7 @@ class Main(QDialog):
             if (len(old_operator) > 0): 
                 result = plus(operation, old_operator) or minus(operation, old_operator) or multiply(operation, old_operator) or divide(operation, old_operator) or getRest(operation, old_operator)
                 self.setState('operation', [result])                
-                self.setState('displayNum', str(result))
+                self.setState('displayNum', result)
 
         self.rerender()
 
