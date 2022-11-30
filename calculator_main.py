@@ -66,20 +66,20 @@ class Main(QDialog):
     def clickNumPad(self, number): 
         newData = str(self.getState('displayNum')) + str(number)
 
-        self.setState('displayNum', int(newData))
+        self.setState('displayNum', newData)
         self.rerender()
     
     def clickBackSpace(self):
         newData = str(self.getState('displayNum'))[:-1]
 
-        self.setState('displayNum', int(newData)) if len(newData) > 0 else self.setState('displayNum', newData)
+        self.setState('displayNum', newData)
         self.rerender()
 
     def clickEqual(self):
         operation = self.getState('operation')[:]
         inputNum = self.getState('displayNum')
 
-        if (inputNum != ""): operation.append(int(inputNum))
+        if (inputNum != ""): operation.append(float(inputNum))
 
         if len(operation) == 1:             
             self.setState('operation', operation)
@@ -91,7 +91,7 @@ class Main(QDialog):
             if (len(old_operator) > 0): 
                 result = plus(operation, old_operator) or minus(operation, old_operator) or multiply(operation, old_operator) or divide(operation, old_operator) or getRest(operation, old_operator)
                 self.setState('operation', [result])                
-                self.setState('displayNum', result)
+                self.setState('displayNum', str(result))
 
         self.rerender()
 
@@ -109,22 +109,20 @@ class Main(QDialog):
         self.rerender()
 
     def clickReciprocal(self):
-        displayNum = int(self.getState('displayNum'))
-
         try:
-            self.setState('displayNum', round(1 / int(self.getState('displayNum')), 10))
-        except ZeroDivisionError as e:
+            self.setState('displayNum', str(round(1 / float(self.getState('displayNum')), 10)))
+        except ZeroDivisionError:
             self.clickReset()
             self.setState('displayNum', "0으로 나눌 수 없습니다")
             
         self.rerender()
 
     def clickSquare(self):
-        self.setState('displayNum', pow(self.getState('displayNum'), 2))
+        self.setState('displayNum', str(pow(float(self.getState('displayNum')), 2)))
         self.rerender()
             
     def clickSquareRoot(self):
-        self.setState('displayNum', pow(self.getState('displayNum'), 1/2))
+        self.setState('displayNum', str(pow(float(self.getState('displayNum')), 1/2)))
         self.rerender()
     
     def clickOneOperator(self, operator):
