@@ -5,13 +5,15 @@ from components.NumberDisplay import NumberDisplay
 from buttons.ButtonOperator import ButtonOperator
 from buttons.ButtonNumberPad import ButtonNumberPad
 from buttons.ButtonCommand import ButtonCommand
+
+from utils.fourArithmetic import plus, minus, multiply, divide
  
 
 class Main(QDialog):
     def __init__(self):
         super().__init__()
 
-        self.state = { "displayNum" : "", "operation": [] }
+        self.state = { "displayNum" : "", "operation": [], "operator": "" }
         
         self.layout = QGridLayout()    
         
@@ -28,7 +30,11 @@ class Main(QDialog):
             'clickNumPad': self.clickNumPad
         })   
 
-        self.operator = ButtonOperator({ 'layout': self.layout })   
+        self.operator = ButtonOperator({ 
+            'layout': self.layout,
+            'clickOperator': self.clickOperator 
+        })
+           
         self.command = ButtonCommand({ 'layout': self.layout })   
 
         self.mounted([
@@ -48,7 +54,7 @@ class Main(QDialog):
     def getState(self, stateKey):
         return self.state.get(stateKey); 
 
-    def setState(self, newData, stateKey):
+    def setState(self, stateKey, newData):
         self.state[stateKey] = newData
     
     def rerender(self):
@@ -57,15 +63,43 @@ class Main(QDialog):
     def clickNumPad(self, number): 
         newData = self.getState('displayNum') + str(number)
 
-        self.setState(newData, 'displayNum')
+        self.setState('displayNum', newData)
         self.rerender()
     
     def clickBackSpace(self):
         newData = self.getState('displayNum')[:-1]
         
-        self.setState(newData, 'displayNum')
+        self.setState('displayNum', newData)
         self.rerender()
-        
+
+    def clickEqual(self):
+        operation = self.getState('operation')[:]
+        inputNum = self.getState('displayNum')
+
+        if (inputNum != ""): operation.append(int(inputNum))
+
+        if len(operation) == 1:             
+            self.setState('operation', operation)
+            self.setState('displayNum', "")
+            
+        if len(operation) == 2:
+            old_operator = self.getState('operator')
+            
+            if (len(old_operator) > 0): 
+                result = plus(operation, old_operator) or minus(operation, old_operator) or multiply(operation, old_operator) or divide(operation, old_operator) 
+                self.setState('operation', [result])                
+                self.setState('displayNum', str(result))
+
+        self.rerender()
+
+
+    def clickOperator(self, operator):
+        if operator == "BackSpace": self.clickBackSpace()
+        elif operator == "=": self.clickEqual()
+        else:
+            self.clickEqual()
+            self.setState('operator', operator)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
