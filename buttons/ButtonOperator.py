@@ -5,7 +5,7 @@ class ButtonOperator(QDialog):
         super().__init__()
 
         self.layout = props['layout']
-        self.clickOperator = props['clickOperator']
+        self.clickTwoOperator = props['clickTwoOperator']
         
         self.operators = ['BackSpace', '/', '*', '-', '+', '=']
         self.operator_dict= {}
@@ -24,7 +24,7 @@ class ButtonOperator(QDialog):
             
     def setEvent(self):
         for operator in self.operators:
-            self.operator_dict[operator].clicked.connect(lambda state, op = operator: self.clickOperator(op))
+            self.operator_dict[operator].clicked.connect(lambda state, op = operator: self.clickTwoOperator(op))
 
         
 

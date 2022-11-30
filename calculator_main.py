@@ -32,7 +32,7 @@ class Main(QDialog):
 
         self.operator = ButtonOperator({ 
             'layout': self.layout,
-            'clickOperator': self.clickOperator 
+            'clickTwoOperator': self.clickTwoOperator 
         })
            
         self.command = ButtonCommand({ 
@@ -72,7 +72,7 @@ class Main(QDialog):
     def clickBackSpace(self):
         newData = str(self.getState('displayNum'))[:-1]
         
-        self.setState('displayNum', int(newData))
+        self.setState('displayNum', int(newData)) if len(newData) > 0 else self.setState('displayNum', newData)
         self.rerender()
 
     def clickEqual(self):
@@ -95,7 +95,7 @@ class Main(QDialog):
 
         self.rerender()
 
-    def clickOperator(self, operator):
+    def clickTwoOperator(self, operator):
         if operator == "BackSpace": self.clickBackSpace()
         elif operator == "=": self.clickEqual()
         else:
@@ -122,7 +122,7 @@ class Main(QDialog):
     
     def clickOneOperator(self, operator):
         if operator == 'C' or operator == 'CE': self.clickReset()
-        if operator == '%': self.clickOperator(operator)
+        if operator == '%': self.clickTwoOperator(operator)
         if operator == '1/x': self.clickReciprocal()
         if operator == 'x²': self.clickSquare()
         if operator == '√': self.clickSquareRoot()
