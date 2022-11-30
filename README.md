@@ -1,5 +1,10 @@
 # Python-Calculator
 
+## ✨ 시연영상
+
+<img width="500px" src="https://user-images.githubusercontent.com/78203399/204764965-85c9ce21-d425-4ca4-9c30-4119de4e75bb.gif" />
+
+
 ## 📃 설명
 
 파이썬의 GUI 라이브러리인 PyQt5를 이용하여 구현한 __윈도우용 계산기__
