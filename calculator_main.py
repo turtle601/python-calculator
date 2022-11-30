@@ -71,7 +71,7 @@ class Main(QDialog):
     
     def clickBackSpace(self):
         newData = str(self.getState('displayNum'))[:-1]
-        
+
         self.setState('displayNum', int(newData)) if len(newData) > 0 else self.setState('displayNum', newData)
         self.rerender()
 
@@ -109,7 +109,14 @@ class Main(QDialog):
         self.rerender()
 
     def clickReciprocal(self):
-        self.setState('displayNum', round(1 / int(self.getState('displayNum')), 10))
+        displayNum = int(self.getState('displayNum'))
+
+        try:
+            self.setState('displayNum', round(1 / int(self.getState('displayNum')), 10))
+        except ZeroDivisionError as e:
+            self.clickReset()
+            self.setState('displayNum', "0으로 나눌 수 없습니다")
+            
         self.rerender()
 
     def clickSquare(self):
