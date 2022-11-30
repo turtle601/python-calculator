@@ -2,9 +2,9 @@ import sys
 from PyQt5.QtWidgets import *
 
 from components.NumberDisplay import NumberDisplay
-from buttons.ButtonOperator import ButtonOperator
-from buttons.ButtonNumberPad import ButtonNumberPad
-from buttons.ButtonCommand import ButtonCommand
+from components.buttons.ButtonOperator import ButtonOperator
+from components.buttons.ButtonNumberPad import ButtonNumberPad
+from components.buttons.ButtonCommand import ButtonCommand
 
 from utils.fourArithmetic import plus, minus, multiply, divide, getRest
  
