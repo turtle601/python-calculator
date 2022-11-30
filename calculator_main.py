@@ -26,9 +26,7 @@ class Main(QDialog):
 
         self.numberPad = ButtonNumberPad({ 
             'layout': self.layout,
-            'getState': self.getState,
-            'setState': self.setState,
-            'rerender': self.rerender 
+            'clickNumPad': self.clickNumPad
         })   
 
         self.operator = ButtonOperator({ 'layout': self.layout })   
@@ -56,6 +54,12 @@ class Main(QDialog):
     
     def rerender(self):
         self.display.render()
+
+    def clickNumPad(self, number): 
+        newData = self.getState() + str(number)
+
+        self.setState(newData)
+        self.rerender()
         
 
 if __name__ == '__main__':

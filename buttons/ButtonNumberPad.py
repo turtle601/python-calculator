@@ -5,9 +5,7 @@ class ButtonNumberPad(QDialog):
         super().__init__()
 
         self.layout = props['layout']
-        self.getState = props['getState']
-        self.setState = props['setState']
-        self.rerender = props['rerender']
+        self.clickNumPad = props['clickNumPad']
         
         self.number_button_dict = {}
 
@@ -49,9 +47,3 @@ class ButtonNumberPad(QDialog):
         self.dotBtn.clicked.connect(lambda: self.clickNumPad('.'))
         self.doubleZeroBtn.clicked.connect(lambda: self.clickNumPad('00'))
     
-
-    def clickNumPad(self, number):
-        newData = self.getState() + str(number)
-
-        self.setState(newData)
-        self.rerender()
