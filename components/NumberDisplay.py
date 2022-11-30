@@ -6,10 +6,15 @@ class NumberDisplay(QDialog):
         
         self.layout = props['layout']
         self.getState = props['getState']
+    
+    def template(self):
+        self.display = QLineEdit('')
 
     def render(self):
-        print(self.getState('displayNum'))
-        self.layout.addWidget(QLabel(self.getState('displayNum')), 0, 4)
+        self.template()
+        self.display.setText(self.getState('displayNum'))
+
+        self.layout.addWidget(self.display, 0, 4)
 
        
 
