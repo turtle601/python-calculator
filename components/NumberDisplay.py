@@ -9,6 +9,7 @@ class NumberDisplay(QDialog):
     
     def template(self):
         self.display = QLineEdit('')
+        self.display.setReadOnly(True)
 
     def render(self):
         self.template()
