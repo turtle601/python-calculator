@@ -15,11 +15,14 @@ PyQt5 module
 
 ## Installation Require
 
-```python
+```
 python --version 
 3.8.10
 
 pip3 install pyqt5
+
+
+// 실행 파일: calculator_main.py  
 ```
 
 ## 🕹 사용 방법
