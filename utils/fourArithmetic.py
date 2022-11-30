@@ -8,8 +8,12 @@ def minus(array, operator):
 
 def multiply(array, operator):
     if operator == '*':
-        return array[1] * array[0]
+        return array[0] * array[1]
 
 def divide(array, operator):
     if operator == '/':
         return round(array[0] / array[1], 10)
+
+def getRest(array, operator):
+    if operator == '%':
+        return array[0] % array[1]
